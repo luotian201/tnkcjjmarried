@@ -4,61 +4,44 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasMusic, setHasMusic] = useState(false);
+  const [hasMusic, setHasMusic] = useState(true); // 默认显示播放按钮
   const [showPlayButton, setShowPlayButton] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    // 检查是否有音乐文件
-    checkMusicFile();
+    // 直接设置音乐源并显示播放按钮
+    if (audioRef.current) {
+      audioRef.current.src = '/music/wedding.mp3';
+      console.log('设置音乐源: /music/wedding.mp3');
+    }
     
-    // 延迟显示播放按钮，给用户一个优雅的提示
+    // 延迟显示播放按钮
     const timer = setTimeout(() => {
       setShowPlayButton(true);
+      console.log('显示播放按钮');
     }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const checkMusicFile = async () => {
-    try {
-      // 检查常见的音乐文件名
-      const musicFiles = ['wedding.mp3', 'music.mp3', 'bgm.mp3', 'song.mp3'];
-      
-      for (const filename of musicFiles) {
-        try {
-          const response = await fetch(`/music/${filename}`, { method: 'HEAD' });
-          if (response.ok) {
-            setHasMusic(true);
-            if (audioRef.current) {
-              audioRef.current.src = `/music/${filename}`;
-            }
-            break;
-          }
-        } catch (e) {
-          // 继续检查下一个文件
-        }
-      }
-    } catch (error) {
-      console.log('检查音乐文件时出错:', error);
-    }
-  };
-
   const togglePlay = async () => {
-    if (!audioRef.current || !hasMusic) return;
+    console.log('点击播放按钮');
+    if (!audioRef.current) return;
 
     try {
       if (isPlaying) {
         audioRef.current.pause();
         setIsPlaying(false);
+        console.log('暂停音乐');
       } else {
         // 尝试播放音乐
         await audioRef.current.play();
         setIsPlaying(true);
+        console.log('开始播放音乐');
       }
     } catch (error) {
       console.log('音乐播放失败:', error);
-      // 如果自动播放失败，显示用户需要手动点击的提示
+      setHasMusic(false);
     }
   };
 
@@ -73,10 +56,7 @@ export default function MusicPlayer() {
     }
   };
 
-  // 如果没有音乐文件，不显示播放器
-  if (!hasMusic) {
-    return null;
-  }
+  // 简化显示逻辑，总是显示播放器（如果有音乐文件）
 
   return (
     <>

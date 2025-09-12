@@ -59,6 +59,33 @@ export default function PhotoCarousel({
     setCurrentIndex(currentIndex === photos.length - 1 ? 0 : currentIndex + 1);
   };
 
+  // 触摸滑动处理
+  const [touchStart, setTouchStart] = useState<number>(0);
+  const [touchEnd, setTouchEnd] = useState<number>(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      goToNext();
+    }
+    if (isRightSwipe) {
+      goToPrevious();
+    }
+  };
+
   if (loading) {
     return (
       <div className={`relative w-full h-80 rounded-lg overflow-hidden shadow-lg border-4 border-white ${className}`}>
@@ -89,7 +116,12 @@ export default function PhotoCarousel({
 
   return (
     <div className={className}>
-      <div className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg border-4 border-white group">
+      <div 
+        className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg border-4 border-white group"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         {photos.map((photo, index) => (
           <div
             key={photo}

@@ -38,13 +38,14 @@ export default function FloatingElements() {
       {elements.map((element) => (
         <div
           key={element.id}
-          className="absolute animate-float opacity-60"
+          className="absolute animate-float opacity-70"
           style={{
             left: `${element.left}%`,
             animationDelay: `${element.animationDelay}s`,
             animationDuration: `${element.animationDuration}s`,
             fontSize: `${element.size}rem`,
             top: '100vh', // 从底部开始
+            color: element.symbol === '囍' ? '#dc2626' : 'inherit', // 囍字设为红色
           }}
         >
           {element.symbol}
