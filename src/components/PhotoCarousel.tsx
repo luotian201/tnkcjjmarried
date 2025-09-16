@@ -88,7 +88,7 @@ export default function PhotoCarousel({
 
   if (loading) {
     return (
-      <div className={`relative w-full h-80 rounded-lg overflow-hidden shadow-lg border-4 border-white ${className}`}>
+      <div className={`relative w-full rounded-lg overflow-hidden shadow-lg border-4 border-white ${className}`} style={{ aspectRatio: '4/5', maxHeight: '400px' }}>
         <div className="absolute inset-0 bg-gradient-to-br from-pink-200 to-red-200 flex items-center justify-center">
           <div className="text-center text-gray-600">
             <div className="animate-spin text-4xl mb-4">⭕</div>
@@ -101,7 +101,7 @@ export default function PhotoCarousel({
 
   if (photos.length === 0) {
     return (
-      <div className={`relative w-full h-80 rounded-lg overflow-hidden shadow-lg border-4 border-white ${className}`}>
+      <div className={`relative w-full rounded-lg overflow-hidden shadow-lg border-4 border-white ${className}`} style={{ aspectRatio: '4/5', maxHeight: '400px' }}>
         <div className="absolute inset-0 bg-gradient-to-br from-pink-200 to-red-200 flex items-center justify-center">
           <div className="text-center text-gray-600">
             <div className="text-6xl mb-4">📷</div>
@@ -116,8 +116,9 @@ export default function PhotoCarousel({
 
   return (
     <div className={className}>
-      <div 
-        className="relative w-full h-80 rounded-lg overflow-hidden shadow-lg border-4 border-white group"
+      <div
+        className="relative w-full rounded-lg overflow-hidden shadow-lg border-4 border-white group"
+        style={{ aspectRatio: '4/5', maxHeight: '400px' }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
