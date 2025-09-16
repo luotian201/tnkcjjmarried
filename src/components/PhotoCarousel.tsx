@@ -160,16 +160,16 @@ export default function PhotoCarousel({
               </svg>
             </button>
 
-            {/* 照片计数 */}
-            <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
+            {/* 照片计数 - 已隐藏 */}
+            {/* <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
               {currentIndex + 1} / {photos.length}
-            </div>
+            </div> */}
           </>
         )}
       </div>
 
-      {/* 指示器 */}
-      {photos.length > 1 && (
+      {/* 指示器 - 已隐藏 */}
+      {/* {photos.length > 1 && (
         <div className="flex justify-center mt-4 space-x-2">
           {photos.map((_, index) => (
             <button
@@ -181,7 +181,7 @@ export default function PhotoCarousel({
             />
           ))}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
